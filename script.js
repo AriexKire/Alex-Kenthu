@@ -1,11 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Update the spans with actual information
-    document.getElementById('name').textContent = 'Your Name';
-    document.getElementById('university').textContent = 'Your University/School';
-    document.getElementById('degree').textContent = 'Your Degree';
-    document.getElementById('skills').textContent = 'Your Skills';
-    document.getElementById('hobbies').textContent = 'Your Hobbies';
-    document.getElementById('otherHobbies').textContent = 'Other Hobbies';
+    document.getElementById('name').textContent = 'Raditya Fahren (Alex)';
+    document.getElementById('university').textContent = 'X PPLG 2';
+    document.getElementById('skills').textContent = '';
+    document.getElementById('hobbies').textContent = 'Tidur';
+    document.getElementById('otherHobbies').textContent = 'dan makan';
 
     // Theme selector functionality
     const themeSelector = document.getElementById('themeSelector');
@@ -13,33 +12,103 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateTheme() {
         const selectedTheme = themeSelector.value;
-        document.body.style.backgroundColor = getThemeBackgroundColor(selectedTheme);
-        document.body.style.color = getThemeTextColor(selectedTheme);
+        applyThemeColors(selectedTheme);
     }
 
-    function getThemeBackgroundColor(theme) {
+    function applyThemeColors(theme) {
+        const palette = getThemePalette(theme);
+
+        document.body.style.backgroundColor = palette.body.background;
+        document.body.style.color = palette.body.text;
+        document.querySelector('header').style.backgroundColor = palette.header.background;
+        document.querySelector('header').style.color = palette.header.text;
+        document.querySelector('h1').style.color = palette.header.color;
+        document.querySelector('button').style.backgroundColor = palette.button.background;
+        document.querySelector('button').style.color = palette.button.text;
+    }
+
+    function getThemePalette(theme) {
         switch (theme) {
             case 'dark-theme':
-                return '#333';
+                return {
+                    body: {
+                        background: '#333',
+                        text: '#fff'
+                    },
+                    header: {
+                        background: '#333',
+                        text: '#fff',
+                        color: '#fff'
+                    },
+                    button: {
+                        background: '#3498db',
+                        text: '#fff'
+                    }
+                };
             case 'light-theme':
-                return '#fff';
+                return {
+                    body: {
+                        background: '#f0f0f0',
+                        text: '#333'
+                    },
+                    header: {
+                        background: '#f0f0f0',
+                        text: '#333',
+                        color: '#333'
+                    },
+                    button: {
+                        background: '#3498db',
+                        text: '#fff'
+                    }
+                };
             case 'custom-theme1':
-                return '#ffcc00';
+                return {
+                    body: {
+                        background: '#5585b5',
+                        text: '#333'
+                    },
+                    header: {
+                        background: '#79c2d0',
+                        text: '#fff',
+                        color: '#5585b5'
+                    },
+                    button: {
+                        background: '#79c2d0',
+                        text: '#fff'
+                    }
+                };
             case 'custom-theme2':
-                return '#e74c3c';
+                return {
+                    body: {
+                        background: '#defcf9',
+                        text: '#333'
+                    },
+                    header: {
+                        background: '#c3bef0',
+                        text: '#fff',
+                        color: '#defcf9'
+                    },
+                    button: {
+                        background: '#c3bef0',
+                        text: '#fff'
+                    }
+                };
             default:
-                return '#f0f0f0';  // Default theme
-        }
-    }
-
-    function getThemeTextColor(theme) {
-        switch (theme) {
-            case 'dark-theme':
-                return '#fff';
-            case 'light-theme':
-                return '#333';
-            default:
-                return '#333';  // Default text color for custom themes
+                return {
+                    body: {
+                        background: '#333',
+                        text: '#fff'
+                    },
+                    header: {
+                        background: '#333',
+                        text: '#fff',
+                        color: '#fff'
+                    },
+                    button: {
+                        background: '#3498db',
+                        text: '#fff'
+                    }
+                };  // Default theme
         }
     }
 });
