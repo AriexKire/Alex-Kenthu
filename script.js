@@ -7,27 +7,39 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('hobbies').textContent = 'Your Hobbies';
     document.getElementById('otherHobbies').textContent = 'Other Hobbies';
 
-    // Theme options
-    const themes = ['default-theme', 'dark-theme', 'light-theme'];
-    let currentThemeIndex = 0;
+    // Theme selector functionality
+    const themeSelector = document.getElementById('themeSelector');
+    themeSelector.addEventListener('change', updateTheme);
 
-    // Toggle theme button functionality
-    const themeButton = document.getElementById('themeButton');
-    themeButton.addEventListener('click', toggleTheme);
-
-    function toggleTheme() {
-        const body = document.body;
-        body.classList.remove(...themes);  // Remove all existing themes
-
-        currentThemeIndex = (currentThemeIndex + 1) % themes.length;
-        const newTheme = themes[currentThemeIndex];
-        body.classList.add(newTheme);
-
-        // Update button text based on the current theme
-        themeButton.textContent = 'Switch to ${capitalizeFirstLetter(newTheme.split('-')[0])} Theme;'
+    function updateTheme() {
+        const selectedTheme = themeSelector.value;
+        document.body.style.backgroundColor = getThemeBackgroundColor(selectedTheme);
+        document.body.style.color = getThemeTextColor(selectedTheme);
     }
 
-    function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
+    function getThemeBackgroundColor(theme) {
+        switch (theme) {
+            case 'dark-theme':
+                return '#333';
+            case 'light-theme':
+                return '#fff';
+            case 'custom-theme1':
+                return '#ffcc00';
+            case 'custom-theme2':
+                return '#e74c3c';
+            default:
+                return '#f0f0f0';  // Default theme
+        }
+    }
+
+    function getThemeTextColor(theme) {
+        switch (theme) {
+            case 'dark-theme':
+                return '#fff';
+            case 'light-theme':
+                return '#333';
+            default:
+                return '#333';  // Default text color for custom themes
+        }
     }
 });
