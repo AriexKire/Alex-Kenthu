@@ -1,12 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Update the spans with actual information
     document.getElementById('name').textContent = 'Raditya Fahren (Alex)';
     document.getElementById('university').textContent = 'X PPLG 2';
     document.getElementById('skills').textContent = '';
     document.getElementById('hobbies').textContent = 'Tidur';
-    document.getElementById('otherHobbies').textContent = 'dan makan';
+    document.getElementById('otherHobbies').textContent = ' dan makan';
 
-    // Theme selector functionality
     const themeSelector = document.getElementById('themeSelector');
     themeSelector.addEventListener('change', updateTheme);
 
@@ -64,13 +62,13 @@ document.addEventListener('DOMContentLoaded', function () {
             case 'custom-theme1':
                 return {
                     body: {
-                        background: '#5585b5',
+                        background: '#aeccc6',
                         text: '#333'
                     },
                     header: {
-                        background: '#79c2d0',
-                        text: '#fff',
-                        color: '#5585b5'
+                        background: '#aeccc6',
+                        text: '#333',
+                        color: '#333'
                     },
                     button: {
                         background: '#79c2d0',
@@ -80,13 +78,13 @@ document.addEventListener('DOMContentLoaded', function () {
             case 'custom-theme2':
                 return {
                     body: {
-                        background: '#defcf9',
+                        background: '#ffcab0',
                         text: '#333'
                     },
                     header: {
-                        background: '#c3bef0',
-                        text: '#fff',
-                        color: '#defcf9'
+                        background: '#ffcab0',
+                        text: '#333',
+                        color: '#333'
                     },
                     button: {
                         background: '#c3bef0',
@@ -108,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         background: '#3498db',
                         text: '#fff'
                     }
-                };  // Default theme
+                };  
         }
     }
 });
