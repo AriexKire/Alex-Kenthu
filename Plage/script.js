@@ -9,11 +9,11 @@ function init() {
     document.body.appendChild(renderer.domElement);
 
     const cube = createWireframe(new THREE.BoxGeometry(2, 2, 2), getRandomColor());
-    cube.position.x = -3;
+    cube.position.y = -2;
     scene.add(cube);
 
     const ball = createWireframe(new THREE.SphereGeometry(1.5, 32, 32), getRandomColor());
-    ball.position.x = 3;
+    ball.position.y = 2;
     scene.add(ball);
 
     camera.position.z = 5;
