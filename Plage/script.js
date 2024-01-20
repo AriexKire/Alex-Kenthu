@@ -4,68 +4,48 @@ function init() {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight * 5);
 
-    const container = document.createElement('div');
-    container.style.overflowY = 'scroll';
-    container.appendChild(renderer.domElement);
-    document.body.appendChild(container);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
 
-    const shapes = createShapes();
-    shapes.forEach(shape => scene.add(shape));
+    const cube = createWireframe(new THREE.BoxGeometry(2, 2, 2), getRandomColor());
+    cube.position.x = -3;
+    scene.add(cube);
+
+    const ball = createWireframe(new THREE.SphereGeometry(1.5, 32, 32), getRandomColor());
+    ball.position.x = 3;
+    scene.add(ball);
 
     camera.position.z = 5;
 
     function animate() {
         requestAnimationFrame(animate);
-        shapes.forEach(shape => {
-            shape.rotation.x += 0.01;
-            shape.rotation.y += 0.01;
-        });
+
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+
+        ball.rotation.x += 0.01;
+        ball.rotation.y += 0.01;
+
         renderer.render(scene, camera);
     }
 
-    function handleResize() {
+    window.addEventListener('resize', () => {
         const newWidth = window.innerWidth;
-        const newHeight = window.innerHeight * 5;
+        const newHeight = window.innerHeight;
 
         camera.aspect = newWidth / newHeight;
         camera.updateProjectionMatrix();
 
         renderer.setSize(newWidth, newHeight);
-        render();
-    }
-
-    function render() {
-        renderer.render(scene, camera);
-    }
-
-    window.addEventListener('resize', handleResize);
+    });
 
     animate();
 }
 
-function createShapes() {
-    const shapes = [];
-    const spacing = 3;
-    const startY = -10;
-
-    shapes.push(createWireframe(new THREE.TetrahedronGeometry(), getRandomColor(), 3));
-    shapes.push(createWireframe(new THREE.BoxGeometry(), getRandomColor(), 3));
-    shapes.push(createWireframe(new THREE.OctahedronGeometry(), getRandomColor(), 3));
-    shapes.push(createWireframe(new THREE.DodecahedronGeometry(), getRandomColor(), 3));
-    shapes.push(createWireframe(new THREE.IcosahedronGeometry(), getRandomColor(), 3));
-
-    shapes.forEach((shape, index) => {
-        shape.position.y = startY + spacing * index;
-    });
-
-    return shapes;
-}
-
-function createWireframe(geometry, color, linewidth) {
-    const material = new THREE.MeshBasicMaterial({ color: color, wireframe: true, linewidth: linewidth });
-    return new THREE.Mesh(geometry, material);
+function createWireframe(geometry, color) {
+    const material = new THREE.LineBasicMaterial({ color: color });
+    return new THREE.LineSegments(new THREE.WireframeGeometry(geometry), material);
 }
 
 function getRandomColor() {
