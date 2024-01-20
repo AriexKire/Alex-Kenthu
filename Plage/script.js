@@ -1,51 +1,43 @@
-document.getElementById('startBtn').addEventListener('click', startGame);
+import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r125/build/three.module.js';
 
-function startGame() {
-  const chambers = 7;
-  let bullet = Math.floor(Math.random() * chambers) + 1;
-  let spunChamber;
-  let shot = false;
+function init() {
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
 
-  document.getElementById('output').innerText = `Chambers: ${chambers}\nYour turn now`;
+    const geometry = new THREE.BoxGeometry();
+    const material = new THREE.MeshBasicMaterial({ color: getRandomColor(), wireframe: true });
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
 
-  function spinChamber() {
-    spunChamber = Math.floor(Math.random() * chambers) + 1;
-    document.getElementById('output').innerText = 'Spinning the chamber...\nClick...';
+    camera.position.z = 5;
 
-    if (spunChamber === bullet) {
-      document.getElementById('output').innerText = 'BANG! You got shot. Game over!';
-      shot = true;
-    } else {
-      document.getElementById('output').innerText = 'Lucky bastard';
+    function animate() {
+        requestAnimationFrame(animate);
+
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+
+        renderer.render(scene, camera);
     }
-  }
 
-  function pullTrigger() {
-    document.getElementById('output').innerText = 'Pulling the trigger...';
+    window.addEventListener('resize', () => {
+        const newWidth = window.innerWidth;
+        const newHeight = window.innerHeight;
 
-    if (Math.random() < 0.5) {
-      document.getElementById('output').innerText = 'BANG! Bad luck. You may Rest In Hell';
-      shot = true;
-    } else {
-      document.getElementById('output').innerText = 'Click... Phew! Lucky bastard';
-    }
-  }
+        camera.aspect = newWidth / newHeight;
+        camera.updateProjectionMatrix();
 
-  while (!shot) {
-    let choice = prompt('1. Spin\n2. Shoot\n3. Run');
+        renderer.setSize(newWidth, newHeight);
+    });
 
-    switch (parseInt(choice)) {
-      case 1:
-        spinChamber();
-        break;
-      case 2:
-        pullTrigger();
-        break;
-      case 3:
-        document.getElementById('output').innerText = 'Uh-oh, you get shot from behind by the game master';
-        return;
-      default:
-        document.getElementById('output').innerText = 'UH OH. WHAT DID YOU DO!!!!!';
-    }
-  }
+    animate();
 }
+
+function getRandomColor() {
+    return Math.random() * 0xFFFFFF << 0;
+}
+
+init();
